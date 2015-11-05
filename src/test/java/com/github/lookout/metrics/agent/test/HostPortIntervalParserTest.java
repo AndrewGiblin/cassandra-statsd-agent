@@ -66,4 +66,22 @@ public class HostPortIntervalParserTest {
         assertEquals(result.getInterval(), 321);
         assertEquals(result.toString(), "host 2001:db8::1 port 210 every 321 seconds");
     }
+    
+    @Test
+    public void testIntervalDefaultPortPrefix() {
+        HostPortInterval result = new HostPortInterval("1.2.3.4@1/test");
+        assertEquals(result.getHost(), "1.2.3.4");
+        assertEquals(result.getPort(), HostPortInterval.DEFAULT_PORT);
+        assertEquals(result.getPrefix(), "test");
+        assertEquals(result.getInterval(), 1);
+    }
+    
+    @Test
+    public void testIntervalPortPrefix() {
+        HostPortInterval result = new HostPortInterval("1.2.3.4:56@1/test");
+        assertEquals(result.getHost(), "1.2.3.4");
+        assertEquals(result.getPort(), 56);
+        assertEquals(result.getPrefix(), "test");
+        assertEquals(result.getInterval(), 1);
+    }
 }
