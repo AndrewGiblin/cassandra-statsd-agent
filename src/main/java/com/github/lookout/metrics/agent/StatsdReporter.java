@@ -153,7 +153,7 @@ public class StatsdReporter extends AbstractPollingReporter implements MetricPro
 
     @Override
     public void processCounter(MetricName name, Counter counter, Long epoch) throws Exception {
-        statsd.gauge(name.getName(), (int) counter.count());
+        statsd.gauge(cleanName(name.getName()), (int) counter.count());
     }
 
     @Override
@@ -168,6 +168,11 @@ public class StatsdReporter extends AbstractPollingReporter implements MetricPro
 
     @Override
     public void processGauge(MetricName name, Gauge<?> gauge, Long context) throws Exception {
-        statsd.gauge(name.getName(), gauge.hashCode());
+        statsd.gauge(cleanName(name.getName()), gauge.hashCode());
+    }
+    
+    private String cleanName(String name)
+    {
+        return name.replace('.', '-');
     }
 }
